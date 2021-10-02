@@ -18,172 +18,128 @@ SENDER_EMAIL_PASSWORD = os.getenv("SENDER_EMAIL_PASSWORD")
 RECEIVER_EMAIL_1 = os.getenv("RECEIVER_EMAIL_1")
 RECEIVER_EMAIL_2 = os.getenv("RECEIVER_EMAIL_2")
 
+def get_soup(url):
+    page = requests.get(url)
+    return BeautifulSoup(page.content, 'html.parser')
+
 def check_smyths_AC_switch_stock():
     global URL_smyths_AC_switch
     URL_smyths_AC_switch = 'https://www.smythstoys.com/uk/en-gb/video-games-and-tablets/nintendo-gaming/nintendo-switch/nintendo-switch-consoles/nintendo-switch-animal-crossing-limited-edition-console/p/187118'
-    page = requests.get(URL_smyths_AC_switch)
-
-    soup = BeautifulSoup(page.content, 'html.parser')
+    soup = get_soup(URL_smyths_AC_switch)
 
     mydivs = soup.findAll("p", class_="deliveryType homeDelivery js-stockStatus")
 
     stock_message = str(mydivs[0])
     stock_message = stock_message.lower()
-    in_stock = False
 
     # If we can't find "out of stock" then assume it is in stock
-    if stock_message.find("out of stock") == -1:
-        in_stock = True
-
-    return in_stock
+    return stock_message.find("out of stock") == -1
 
 
 def check_smyths_neon_switch_stock():
     global URL_smyths_neon_switch
     URL_smyths_neon_switch = 'https://www.smythstoys.com/uk/en-gb/video-games-and-tablets/nintendo-gaming/nintendo-switch/nintendo-switch-consoles/nintendo-switch-neon-red-blue-with-improved-battery-life/p/182022'
-    page = requests.get(URL_smyths_neon_switch)
-
-    soup = BeautifulSoup(page.content, 'html.parser')
+    soup = get_soup(URL_smyths_neon_switch)
 
     mydivs = soup.findAll("p", class_="deliveryType homeDelivery js-stockStatus")
 
     stock_message = str(mydivs[0])
     stock_message = stock_message.lower()
-    in_stock = False
 
     # If we can't find "out of stock" then assume it is in stock
-    if stock_message.find("out of stock") == -1:
-        in_stock = True
-
-    return in_stock
+    return stock_message.find("out of stock") == -1
 
 
 def check_smyths_grey_switch_stock():
     global URL_smyths_grey_switch
     URL_smyths_grey_switch = 'https://www.smythstoys.com/uk/en-gb/video-games-and-tablets/nintendo-gaming/nintendo-switch/nintendo-switch-consoles/nintendo-switch-grey-with-improved-battery-life/p/182023'
-    page = requests.get(URL_smyths_grey_switch)
-
-    soup = BeautifulSoup(page.content, 'html.parser')
+    soup = get_soup(URL_smyths_grey_switch)
 
     mydivs = soup.findAll("p", class_="deliveryType homeDelivery js-stockStatus")
 
     stock_message = str(mydivs[0])
     stock_message = stock_message.lower()
-    in_stock = False
 
     # If we can't find "out of stock" then assume it is in stock
-    if stock_message.find("out of stock") == -1:
-        in_stock = True
-
-    return in_stock
+    return stock_message.find("out of stock") == -1
 
 
 def check_nintendo_AC_switch_stock():
     global URL_nintendo_AC_switch
     URL_nintendo_AC_switch = 'https://store.nintendo.co.uk/nintendo-switch-console/nintendo-switch-animal-crossing-new-horizons-edition/12458084.html'
-    page = requests.get(URL_nintendo_AC_switch)
-
-    soup = BeautifulSoup(page.content, 'html.parser')
+    soup = get_soup(URL_nintendo_AC_switch)
 
     mybutton = soup.find("button", {"data-component": "productAddToBasket"})
 
     stock_message = mybutton.text
     stock_message = stock_message.lower()
 
-    in_stock = False
-
     # If we can't find "out of stock" then assume it is in stock
-    if stock_message.find("out of stock") == -1:
-        in_stock = True
-
-    return in_stock
+    return stock_message.find("out of stock") == -1
 
 
 def check_nintendo_neon_switch_stock():
     global URL_nintendo_neon_switch
     URL_nintendo_neon_switch = 'https://store.nintendo.co.uk/nintendo-switch-console/nintendo-switch-with-neon-blue-neon-red-joy-con-controllers/12245286.html'
-    page = requests.get(URL_nintendo_neon_switch)
-
-    soup = BeautifulSoup(page.content, 'html.parser')
+    soup = get_soup(URL_nintendo_neon_switch)
 
     mybutton = soup.find("button", {"data-component": "productAddToBasket"})
 
     stock_message = mybutton.text
     stock_message = stock_message.lower()
 
-    in_stock = False
-
     # If we can't find "out of stock" then assume it is in stock
-    if stock_message.find("out of stock") == -1:
-        in_stock = True
-
-    return in_stock
+    return stock_message.find("out of stock") == -1
 
 
 def check_nintendo_grey_switch_stock():
     global URL_nintendo_grey_switch
     URL_nintendo_neon_switch = 'https://store.nintendo.co.uk/nintendo-switch-console/nintendo-switch-with-neon-blue-neon-red-joy-con-controllers/12245286.html'
-    page = requests.get(URL_nintendo_neon_switch)
-
-    soup = BeautifulSoup(page.content, 'html.parser')
+    soup = get_soup(URL_nintendo_neon_switch)
 
     mybutton = soup.find("button", {"data-component": "productAddToBasket"})
 
     stock_message = mybutton.text
     stock_message = stock_message.lower()
 
-    in_stock = False
-
     # If we can't find "out of stock" then assume it is in stock
-    if stock_message.find("out of stock") == -1:
-        in_stock = True
-
-    return in_stock
+    return stock_message.find("out of stock") == -1
 
 
 def check_JL_AC_switch_stock():
     global URL_JL_AC_switch
     URL_JL_AC_switch = 'https://www.johnlewis.com/nintendo-switch-1-1-console-with-animal-crossing-new-horizons-game-bundle/p4918594'
-    page = requests.get(URL_JL_AC_switch)
-
-    soup = BeautifulSoup(page.content, 'html.parser')
+    soup = get_soup(URL_JL_AC_switch)
 
     mybutton = soup.find("button", {"id": "button--add-to-basket"})
 
     # JL has separate buttons for in stock and out of stock
     # If we can't find "in stock" (i.e. "add to basket") button, meaning soup returns None, then in_stock will be False
-    in_stock = (mybutton is not None)
-    return in_stock
+    return (mybutton is not None)
 
 
 def check_JL_neon_switch_stock():
     global URL_JL_neon_switch
     URL_JL_neon_switch = 'https://www.johnlewis.com/nintendo-switch-1-1-32gb-console-with-joy-con/neon/p4751133'
-    page = requests.get(URL_JL_neon_switch)
-
-    soup = BeautifulSoup(page.content, 'html.parser')
+    soup = get_soup(URL_JL_neon_switch)
 
     mybutton = soup.find("button", {"id": "button--add-to-basket"})
 
     # JL has separate buttons for in stock and out of stock
     # If we can't find "in stock" (i.e. "add to basket") button, meaning soup returns None, then in_stock will be False
-    in_stock = (mybutton is not None)
-    return in_stock
+    return (mybutton is not None)
 
 
 def check_JL_grey_switch_stock():
     global URL_JL_grey_switch
     URL_JL_grey_switch = 'https://www.johnlewis.com/nintendo-switch-1-1-32gb-console-with-joy-con/grey/p4751133'
-    page = requests.get(URL_JL_grey_switch)
-
-    soup = BeautifulSoup(page.content, 'html.parser')
+    soup = get_soup(URL_JL_grey_switch)
 
     mybutton = soup.find("button", {"id": "button--add-to-basket"})
 
     # JL has separate buttons for in stock and out of stock
     # If we can't find "in stock" (i.e. "add to basket") button, meaning soup returns None, then in_stock will be False
-    in_stock = (mybutton is not None)
-    return in_stock
+    return (mybutton is not None)
 
 
 while True:
