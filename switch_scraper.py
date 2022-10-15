@@ -10,13 +10,13 @@ from email.mime.text import MIMEText
 from dotenv import load_dotenv
 
 import os
+import json
 
 load_dotenv()
 SMTP_SERVER = os.getenv("SMTP_SERVER")
 SENDER_EMAIL = os.getenv("SENDER_EMAIL")
 SENDER_EMAIL_PASSWORD = os.getenv("SENDER_EMAIL_PASSWORD")
-RECEIVER_EMAIL_1 = os.getenv("RECEIVER_EMAIL_1")
-RECEIVER_EMAIL_2 = os.getenv("RECEIVER_EMAIL_2")
+RECEIVER_EMAILS = json.loads(os.environ.get("RECEIVER_EMAILS", []))
 
 def get_soup(url):
     page = requests.get(url)
@@ -178,7 +178,7 @@ while True:
         smtp_server = SMTP_SERVER
         port = 587  # For starttls
         sender_email = SENDER_EMAIL
-        receiver_emails = [RECEIVER_EMAIL_1, RECEIVER_EMAIL_2]
+        receiver_emails = RECEIVER_EMAILS
 
         # Multiple recepients msg
         email_msg = ""
